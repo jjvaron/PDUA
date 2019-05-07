@@ -85,9 +85,9 @@ U4: multiplicador_IOM	port map (clk, iom_s, cs_MULT_s, A_MULT_s, B_MULT_s, C_MUL
 
 bus_data_out <= datao;
 -- Decodificador
-cs_ROM <= not diri(7);
-cs_RAM <= diri(7); 
+cs_ROM <=  IOM AND (not diri(7));
+cs_RAM <=  IOM AND diri(7); 
 -------------------------------------------------------
-cs_MULT_s <= diri(7) AND diri(6) AND diri(5) AND diri(4) AND diri(3) AND diri(2) AND diri(1) AND diri(0); -- Por tener solo un periferico
+cs_MULT_s <= (NOT IOM) AND diri(7) AND diri(6) AND diri(5) AND diri(4) AND diri(3) AND diri(2) AND diri(1) AND diri(0); -- Por tener solo un periferico
 
 end Behavioral;
