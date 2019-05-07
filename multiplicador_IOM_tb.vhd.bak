@@ -1,0 +1,51 @@
+-- multiplicador_IOM testebench
+-- Autores: Jelitza Varón
+--				Sebastián Parrado
+-------------------------------------------------------
+LIBRARY IEEE;
+USE ieee.std_logic_1164.all;
+USE ieee.numeric_std.all;
+-------------------------------------------------------
+ENTITY multiplicador_IOM_tb IS
+END ENTITY multiplicador_IOM_tb;
+-------------------------------------------------------
+ARCHITECTURE testbench OF multiplicador_IOM_tb IS
+	SIGNAL clk_tb	:  STD_LOGIC	:=	'0';
+	SIGNAL rst_tb	:	STD_LOGIC	:= '1';
+	SIGNAL IOM_tb	:  STD_LOGIC	:=	'1';
+	SIGNAL cs_tb	:  STD_LOGIC	:=	'0';
+	SIGNAL A_tb    :  STD_LOGIC_VECTOR(7 DOWNTO 0)	:="11111111";
+	SIGNAL B_tb		:  STD_LOGIC_VECTOR(7 DOWNTO 0)	:="11111111";
+	SIGNAL product_out_tb	:  STD_LOGIC_VECTOR(15 DOWNTO 0);
+-------------------------------------------------------
+BEGIN
+	DUT: ENTITY work.multiplicador_IOM
+	PORT MAP(clk	=> clk_tb,
+				--rst	=> rst_tb,
+				IOM	=> IOM_tb,
+				cs		=>	cs_tb,
+				A		=> A_tb,
+				B		=> B_tb,
+				product_out	=>	product_out_tb);
+	
+	-- CLOCK GENERATION
+	clk_tb <= NOT(clk_tb) AFTER 50 ns;
+	-- TEST VECTORS
+	IOM_tb <= '0'	AFTER 200 ns,
+	          '1'	AFTER 1200 ns,
+				 '0'  AFTER 1250 ns,
+				 '1'	AFTER 2400 ns,
+				 '0'  AFTER 2450 ns;
+						
+--	IOM_tb <= '0'	AFTER 200 ns;
+	
+	cs_tb	 <= '1'	AFTER 200 ns;
+	
+	A_tb	 <= "00000111"	AFTER 200 ns,
+				 "00000100"	AFTER 1200 ns,
+				 "01010000" AFTER 2400 ns;
+				 
+	B_tb	 <= "00011100"	AFTER 200 ns,
+				 "00000100"	AFTER 1200 ns,
+				 "11010000" AFTER 2400 ns;
+END ARCHITECTURE;

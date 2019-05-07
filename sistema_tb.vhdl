@@ -1,0 +1,32 @@
+-- Sistema testbench
+-- Autores: Sebastián Parrado
+--				Jelitza Varón
+-------------------------------------------------------
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.STD_LOGIC_ARITH.ALL;
+use IEEE.STD_LOGIC_UNSIGNED.ALL;
+-------------------------------------------------------
+entity sistema_tb is
+end sistema_tb;
+-------------------------------------------------------
+ARCHITECTURE testbench OF sistema_tb IS
+	SIGNAL	clk_tb 			:	std_logic := '0';
+	SIGNAL	rst_n_tb 		: 	std_logic := '0';
+	SIGNAL	int_tb 			: 	std_logic := '1'; --
+	SIGNAL	bus_data_out_tb :		std_logic_vector(7 downto 0);
+-------------------------------------------------------
+BEGIN
+	DUT: ENTITY work.sistema
+	PORT MAP	(	clk => clk_tb,
+					rst_n => rst_n_tb,
+					int => int_tb, --
+					bus_data_out => bus_data_out_tb);
+
+	-- CLOCK GENERATION
+	clk_tb <= NOT(clk_tb) AFTER 50 ns; -- 50 MHz clock generation
+   -- TEST VECTORS
+	rst_n_tb <= '1' AFTER 200 ns;
+	int_tb <= '0' AFTER 200 ns;
+END ARCHITECTURE testbench;
+		
